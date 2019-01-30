@@ -61,3 +61,20 @@ func CompileProgram(fName, lang string) (string, error) {
 
 	return "", compileOptions.GetOutFile()
 }
+
+func MakeExecutable() {
+	// if py no need
+}
+
+func ExecuteProgram() {
+	MakeExecutable()
+	runner := CodeRunner.New()
+}
+
+type ExecuteRequest struct {
+	Code     string
+	UID      int
+	EXID     int
+	InData   string
+	Language string
+}
