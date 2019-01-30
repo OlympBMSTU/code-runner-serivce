@@ -1,5 +1,13 @@
 package runner
 
+import (
+	"fmt"
+	"io/ioutil"
+	"os/exec"
+
+	"github.com/OlympBMSTU/code-runner-serivce/common"
+)
+
 // interface to run code
 type IRunner interface {
 	RunCode(codeFileName, answersFileName string) int
@@ -14,29 +22,42 @@ func worker(data chan string) {
 
 }
 
-// func CompileProgram(fName, lang string) (string, error) {
-// 	compileOptions := GetCompileOptions(lang)
-// 	// example
-// 	newFileName := fName - ".lang" + ".out"
-// 	cmd := exec.Command(compleOptinos.Compiler, fName, compileOptions.AsArgs())
+func (runner *CodeRunner) RunCode(codeFileName, answersFileName string) int {
+	// get answers from file
+	// os.ReadAll
+	// if err := os.Open(answersFileName); err != nil {
+	// return bad status => please contact to admin
+	// }
+	return 0
+}
 
-// 	stdout, err := cmd.StderrPipe()
+func CompileProgram(fName, lang string) (string, error) {
+	compilerOptions, err := common.NewCompilerOptions(lang)
 
-// 	if err != nil {
-// 		fmt.Print(err)
-// 		return "", err
-// 	}
+	if err != nil {
+		return "", err
+	}
+	// 	// example
+	// 	newFileName := fName - ".lang" + ".out"
+	cmd := exec.Command(compilerOptions.GetCompiler(), compilerOptions.AsArgs()...) //fName, compileOptions.AsArgs())
 
-// 	err = cmd.Start()
-// 	if err != nil {
+	stdout, err := cmd.StderrPipe()
 
-// 	}
-// 	b, err := ioutil.ReadAll(stdout)
+	if err != nil {
+		fmt.Print(err)
+		return "", err
+	}
 
-// 	if err = cmd.Wait(); err != nil {
-// 		// todo check error, by default think that its user problem
-// 		fmt.Print(err)
-// 	}
+	err = cmd.Start()
+	if err != nil {
 
-// 	return "", newFileName
-// }
+	}
+	b, err := ioutil.ReadAll(stdout)
+
+	if err = cmd.Wait(); err != nil {
+		// 		// todo check error, by default think that its user problem
+		fmt.Print(err)
+	}
+
+	return "", compileOptions.GetOutFile()
+}

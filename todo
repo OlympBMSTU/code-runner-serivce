@@ -1,0 +1,9 @@
+// think about where to store this program
+// also how to run it correctly with channels
+// 1) Read about channels
+// 2) Correctly compile and running, maybe some structs
+// 3) Check time execution program
+// 4) Get files via RabbitMq or Request
+// 5) Where to store answers and input and others
+// 6) How to synchronize tests, ex we have 30 tests and we want to get it in right order
+// 7) Do not forget about eof to stdin 
